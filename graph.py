@@ -64,6 +64,47 @@ for file_name in file_list:
                    s=150,
                    label=f'Winrate change > {threshold_red} ')
 
+
+        file_name_without_extension = os.path.splitext(file_name)[0]
+        file_path = os.path.join(base_dir,'games.txt')
+        text_to_find = file_name_without_extension   
+
+        name_found = -1
+        # Open the file and search for the exact text match
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+
+            for line_number, line in enumerate(lines, start=1):
+                if line.strip() == text_to_find:
+                    name_found = line_number
+                    break  # Stops after finding the first occurrence
+            else:
+                print(f"The text '{text_to_find}' was not found in '{file_path}'")
+
+        file_path = os.path.join(base_dir,'LCS_Week.txt')
+        line_number_to_select = name_found # Replace this with the line number you want to select
+
+        
+        # Open the file and select the specific line
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if len(lines) >= line_number_to_select:
+                selected_line = lines[line_number_to_select - 1].strip()  # Subtract 1 for zero-based indexing
+                lcs_week = selected_line
+            else:
+                print(f"Line number {line_number_to_select} does not exist in '{file_path}'")
+         
+        file_path = os.path.join(base_dir,'names.txt')       
+         # Open the file and select the specific line
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if len(lines) >= line_number_to_select:
+                selected_line = lines[line_number_to_select - 1].strip()  # Subtract 1 for zero-based indexing
+                game_name = selected_line
+            else:
+                print(f"Line number {line_number_to_select} does not exist in '{file_path}'")
+
+
         # Add labels, title, legend, etc.
         ax.set_ylim(0, 1)
         ax.set_xlim(min(x_values), max(x_values))
@@ -71,7 +112,7 @@ for file_name in file_list:
         ax.set_xlabel('Time (in seconds)', fontsize=12)
         ax.set_ylabel('Win Percentage', fontsize=12)
         ax.axhline(y=0, color='gray', linestyle='--', linewidth=1, alpha=0.7)
-        ax.set_title('Win Rate change', fontsize=14)
+        ax.set_title(f'Win Rate for {lcs_week}: {game_name}', fontsize=14)
         ax.grid(True, linestyle='--', alpha=0.7)
         ax.legend()
 
