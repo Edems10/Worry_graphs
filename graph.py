@@ -48,27 +48,30 @@ for file_name in file_list:
                    color='yellow',
                    marker='o',
                    s=150,
-                   label='Mistakes (Yellow)')
+                   label=f' {threshold_yellow[0]} > Winrate change >= {threshold_yellow[1]} ')
 
         ax.scatter([x_values[ind] for ind in orange_indices],
                    [win_rates_team_1[ind] for ind in orange_indices],
                    color='orange',
                    marker='o',
                    s=150,
-                   label='Mistakes (Orange)')
+                   label=f'{threshold_orange[0]} > Winrate change >= {threshold_orange[1]} ')
 
         ax.scatter([x_values[ind] for ind in red_indices],
                    [win_rates_team_1[ind] for ind in red_indices],
                    color='red',
                    marker='o',
                    s=150,
-                   label='Mistakes (Red)')
+                   label=f'Winrate change > {threshold_red} ')
 
         # Add labels, title, legend, etc.
+        ax.set_ylim(0, 1)
+        ax.set_xlim(min(x_values), max(x_values))
+        ax.set_xticks(range(0, max(x_values) + 1, 150))
         ax.set_xlabel('Time (in seconds)', fontsize=12)
         ax.set_ylabel('Win Percentage', fontsize=12)
         ax.axhline(y=0, color='gray', linestyle='--', linewidth=1, alpha=0.7)
-        ax.set_title('Win Rate with Different Types of Mistakes', fontsize=14)
+        ax.set_title('Win Rate change', fontsize=14)
         ax.grid(True, linestyle='--', alpha=0.7)
         ax.legend()
 
