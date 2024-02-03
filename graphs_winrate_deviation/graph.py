@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import os
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
-print(base_dir)
 
 # Load data from JSON file
 file_list = os.listdir(os.path.join(base_dir, 'games_winrate'))
@@ -42,6 +41,17 @@ for file_name in file_list:
         orange_indices = [i for i, diff in enumerate(differences) if threshold_orange[0] < diff <= threshold_orange[1]]
         red_indices = [i for i, diff in enumerate(differences) if diff > threshold_red]
 
+        indices_dict = {
+            'yellow_threshold': yellow_indices,
+            'orange_threshold': orange_indices,
+            'red_threshold': red_indices
+        }
+
+        # Save indices to a JSON file
+        indices_file_path = os.path.join(base_dir, 'thresholds', f'{file_name_without_extension}.json')
+        with open(indices_file_path, 'w') as indices_file:
+            json.dump(indices_dict, indices_file, indent=2)
+        
         # Create scatterplots for different types of mistakes
         ax.scatter([x_values[ind] for ind in yellow_indices],
                    [win_rates_team_1[ind] for ind in yellow_indices],

@@ -1,0 +1,19 @@
+{
+  "yellow_threshold": [
+    18,
+    30,
+    37,
+    48,
+    52,
+    53,
+    54,
+    71,
+    73
+  ],
+  "orange_threshold": [
+    19
+  ],
+  "red_threshold": [
+    38
+  ]
+}
